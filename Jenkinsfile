@@ -22,8 +22,8 @@ pipeline {
 		
 		stage('Push Docker image') {
 		 steps {
-			withCredentials([string(credentialsId: 'DockerHub', variable: 'dockerHub')]) {
-            sh "docker login -u chika1984 -p ${dockerHub}"
+			withCredentials([string(credentialsId: 'Docker-Hub-Pwd', variable: 'docker-Hub-Pwd')]) {
+            sh "docker login -u chika1984 -p ${docker-Hub-Pwd}"
 			}
 			sh 'docker push chika1984/myapp:9.0.0'
 		} 	
