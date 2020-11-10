@@ -30,7 +30,6 @@ pipeline {
 		}
 		stage('Deleting any existing Docker container') {
 		  agent { label 'Staging-Hack' }
-		  agent { label 'Staging-Hack' }
 		  steps {
 			sh 'sudo docker rm -f $(sudo docker ps -a -q)'
 
