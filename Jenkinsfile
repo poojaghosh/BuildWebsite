@@ -29,15 +29,7 @@ pipeline {
 			sh 'docker push chika1984/myapp:9.0.0'
 		} 	
 		}
-		stage('Deleting any existing Docker container') {
-		  agent { label 'Staging-Hack' }
-		  steps {
-			sh 'sudo docker rm -f $(sudo docker ps -a -q)'
-
-			}
-		}
-		 
-         stage('Run Docker image on STAGE Server') {
+		 stage('Run Docker image on STAGE Server') {
 		 steps {
 		    sshagent(['Staging-Hack']){ 
 			sh "ssh -o StrictHostKeyChecking=no ubuntu@15.206.89.92 ${dockerRun}"		 
