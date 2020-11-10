@@ -22,10 +22,10 @@ pipeline {
 		
 		stage('Push Docker image') {
 		 steps {
-			withCredentials([string(credentialsId: 'Docker-Hub-Pwd', variable: 'docker-Hub')]) {
-            sh "docker login -u chika1984 -p ${Docker-Hub-Pwd}"
+			withCredentials([string(credentialsId: 'Docker-Hub-Pwd-Main', variable: 'docker-Hub-Push')]) {
+            sh "docker login -u chika1984 -p ${docker-Hub-Push}"
 			}
-			sh "docker push chika1984/myapp:9.0.0"
+			sh 'docker push chika1984/myapp:9.0.0'
 		} 	
 		}
 		stage('Deleting any existing Docker container') {
