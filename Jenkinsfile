@@ -1,4 +1,4 @@
-def dockerRun = "sudo docker run -it -p 84:80 -d --name WebsiteCItoCD chika1984/myapp:9.0.0"
+def dockerRun = "sudo docker run -it -p 8085:80 -d --name WebsiteCItoCD chika1984/myapp:9.0.0"
 pipeline {
   agent any
       stages {
@@ -28,6 +28,13 @@ pipeline {
 			}
 			sh 'docker push chika1984/myapp:9.0.0'
 		} 	
+		}
+		stage('Deleting any existing Docker container') {
+		  agent { label 'Staging-Hack' }
+		  steps {
+			sh 'sudo docker rm -f $(sudo docker ps -a -q)'
+
+			}
 		}
 		 stage('Run Docker image on STAGE Server') {
 		 steps {
