@@ -1,4 +1,4 @@
-def dockerRun = "sudo docker run -it -p 8085:80 -d --name WebsiteCItoCD chika1984/myapp:9.0.0"
+def dockerRun = "sudo docker run -it -p 84:80 -d --name WebsiteCItoCD chika1984/myapp:9.0.0"
 pipeline {
   agent any
       stages {
