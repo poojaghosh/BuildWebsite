@@ -1,4 +1,4 @@
-def dockerRun = "sudo docker run -it -p 88:80 -d --name WebsiteBuilderCI2CD chika1984/myapp:11.0.0"
+def dockerRun = "sudo docker run -it -p 91:80 -d --name WebsiteBuilderCICD chika1984/myapp:11.0.1"
 pipeline {
   agent any
       stages {
@@ -15,7 +15,7 @@ pipeline {
 		  agent { label 'master' }
 		  	  
          steps {
-			sh 'docker build -t chika1984/myapp:11.0.0 .'
+			sh 'docker build -t chika1984/myapp:11.0.1 .'
 
 			}
 		}	
@@ -23,16 +23,16 @@ pipeline {
 		stage('Push Docker image') {
 		agent { label 'master' }
 		 steps {
-			withCredentials([string(credentialsId: 'Docker-Hub-Pwd-Main', variable: 'dockerHub')]) {
-            sh "docker login -u chika1984 -p ${dockerHub}"
+			withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
+            sh "docker login -u chika1984 -p ${dockerHubPwd}"
 			}
-			sh 'docker push chika1984/myapp:11.0.0'
+			sh 'docker push chika1984/myapp:11.0.1'
 		} 	
 		}
 		 stage('Run Docker image on STAGE Server') {
 		 steps {
-		    sshagent(['Staging-Hack']){ 
-			sh "ssh -o StrictHostKeyChecking=no ubuntu@15.206.89.92 ${dockerRun}"		 
+		    sshagent(['Staging-ADM-VC']){ 
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@13.233.132.33 ${dockerRun}"		 
 		 }
         
 }
